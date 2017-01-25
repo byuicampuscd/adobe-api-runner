@@ -1,19 +1,23 @@
 {
-	"name": "adobe-api-runner",
-	"version": "1.0.0",
-	"description": "A super cool adobe connect API runner that creates a bunch of meetings",
-	"main": "adobe-api-runner.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/byuicampuscd/adobe-api-runner.git"
-	},
-	"author": "Benjamin Earl",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/byuicampuscd/adobe-api-runner/issues"
-	},
-	"homepage": "https://github.com/byuicampuscd/adobe-api-runner#readme"
+  "name": "adobe-api-runner",
+  "version": "1.0.0",
+  "description": "A super cool adobe connect API runner that creates a bunch of meetings",
+  "main": "adobe-api-runner.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byuicampuscd/adobe-api-runner.git"
+  },
+  "author": "Benjamin Earl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/byuicampuscd/adobe-api-runner/issues"
+  },
+  "homepage": "https://github.com/byuicampuscd/adobe-api-runner#readme",
+  "dependencies": {
+    "read": "^1.0.7",
+    "xmldoc": "^1.0.0"
+  }
 }
