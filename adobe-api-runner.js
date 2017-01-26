@@ -1,13 +1,19 @@
 var xmldoc = require('xmldoc');
 var https = require('https');
 var fs = require('fs');
-var read = require('read');
+var cli = require('./cli');
 
 class Session {
-	constructor(callback){
-		this.login( ableToLogin => {
+	constructor(settings,callback){
+		this.settings = settings;
+		if(!settings.coursesFolderID || !settings.adminID || !settings.templateID){
+			console.error("Missing some of the ids, please read the documentation, and add those the the settings file");
+			return
+		}
+		this.login(settings.loginInfo, ableToLogin => {
 			if(ableToLogin){
 				callback();
+				return
 			} else {
 				console.log("Unable to login");
 			}
@@ -15,7 +21,7 @@ class Session {
 	}
 	sendRequest(queryString,xmlPath,callback){
 		
-		var req = https.request({host:"meet16656263.adobeconnect.com",path: "/api/xml?action="+queryString, headers: { 'cookie' : this.cookie} }, res => {
+		var req = https.request({host:this.settings.domain+".adobeconnect.com",path: "/api/xml?action="+queryString, headers: { 'cookie' : this.cookie} }, res => {
 			var body = '';
 			res.on('data', chunk => { body += chunk})
 			res.on('end', () => {
@@ -28,43 +34,32 @@ class Session {
 		req.on('error', console.error);
 		req.end();
 	}
-	getLoginInfo(callback){
-		var loginInfo = {};
-		read({ prompt: '\nUsername/Email: '}, (err, username) => {
-			if(err) {console.err(err)}
-			loginInfo.username = username;
-			read({ prompt: 'Password: ', silent: true, replace: '*' }, (err, password) => {
-				if(err) {console.err(err)}
-				loginInfo.password = password;
-				callback(loginInfo);
-			})
-		})
-	}
-	login(callback){
-		this.getLoginInfo( loginInfo => {
-			var options = {
-				host: "meet16656263.adobeconnect.com",
-				path: "/api/xml",
-				method: "POST",
-				headers: { 'Content-Type' : 'application/xml' }
-			}
-			var postData = "<params><param name='action'>login</param><param name='login'>"+loginInfo.username+"</param><param name='password'>"+loginInfo.password+"</param></params>"
+	
+	login(loginInfo,callback){
+		var options = {
+			host: this.settings.domain+".adobeconnect.com",
+			path: "/api/xml",
+			method: "POST",
+			headers: { 'Content-Type' : 'application/xml' }
+		}
+		var postData = "<params><param name='action'>login</param><param name='login'>"+loginInfo.username+"</param><param name='password'>"+loginInfo.password+"</param></params>"
 
-			var req = https.request(options, res => {
-				this.cookie = res.headers['set-cookie'][0];
-				res.on('data', body => {
-					// checking to see if we were able to login
-					if(new xmldoc.XmlDocument(body).valueWithPath("status@code") === "ok")
-						callback(true);
-					else
-						callback(false);
-				});
-			})
-			req.on('error', console.error);
-			req.write(postData);
-			req.end();
+		var req = https.request(options, res => {
+			this.cookie = res.headers['set-cookie'][0];
+			res.on('data', body => {
+				// checking to see if we were able to login
+				if(new xmldoc.XmlDocument(body).valueWithPath("status@code") === "ok")
+					callback(true);
+				else
+					callback(false);
+			});
 		})
+		req.on('error', console.error);
+		req.write(postData);
+		req.end();
 	}
+
+	
 }
 
 class Instructor {
@@ -126,7 +121,7 @@ class Class {
 		this.savedCourseIDs = {};
 
 		// Creates the Course folder if not already created
-		this.getFolderID(1018231140,courseName, id => {
+		this.getFolderID(session.settings.coursesFolderID,courseName, id => {
 			// I have a bug where when a new course folder is created,
 			// the next calls to find that new folder fail, probably
 			// because the search is just getting a cached result
@@ -134,8 +129,10 @@ class Class {
 			if(id == undefined){
 				if(this.savedCourseIDs[courseName] != undefined)
 					this.courseID = savedCourseIDs[courseName];
-				else
+				else {
 					console.error("Error creating the course folder for "+courseName)
+					return;
+				}
 			}
 			this.savedCourseIDs[courseName] = id;
 			this.courseID = id;
@@ -203,8 +200,7 @@ class Class {
 	}
 	createMeeting(parentFolderID,meetingName){
 		// TODO: Need to insert template sco-id
-		var queryString = "sco-update&folder-id="+this.sectionID+"&type=meeting&name="+meetingName+"&source-sco-id="+
-			1017911573+"&url-path="+meetingName.toLowerCase();
+		var queryString = "sco-update&folder-id="+this.sectionID+"&type=meeting&name="+meetingName+"&source-sco-id="+session.settings.templateID+"&url-path="+meetingName.toLowerCase();
 		session.sendRequest(queryString,"sco@sco-id", id => {
 			if(id == undefined)
 				console.error("Error creating "+meetingName);
@@ -216,7 +212,7 @@ class Class {
 						console.error("Error making "+meetingName+" public");
 					else {
 						// Make the teachers the host of the meeting
-						var queryString = "permissions-update&acl-id="+id+"&principal-id="+1017936982+"&permission-id=host";
+						var queryString = "permissions-update&acl-id="+id+"&principal-id="+session.settings.adminID+"&permission-id=host";
 						session.sendRequest(queryString,"status@code", status => {
 							if(status != "ok")
 								console.error("Error making the teachers the host of "+meetingName);
@@ -228,14 +224,12 @@ class Class {
 	}
 }
 
+var session;
 
-if(process.argv.length != 3){
-	console.error("\nPlease pass the path of the csv as the 3rd argument\n")
-	console.error("ex.                        vvvvvv")
-	console.error("> node adobeAPIrunner.js ./file.csv")
-} else {
-	var session = new Session(() => {
-		fs.readFile(process.argv[2],'utf8',(err,data) => {
+cli.getSettings(settings => {
+	if(!settings) {return}
+	session = new Session(settings,() => {
+		fs.readFile(settings.csv,'utf8',(err,data) => {
 			if(err) { console.error(err) }
 			// Parsing the CSV in one line!
 			var array = data.split('\r\n').slice(1,-1).map( x => x.split(','));
@@ -250,4 +244,4 @@ if(process.argv.length != 3){
 			}
 		})
 	})
-}
+})

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/byuicampuscd/adobe-api-runner#readme",
   "dependencies": {
     "read": "^1.0.7",
-    "xmldoc": "^1.0.0"
+    "xmldoc": "^1.0.0",
+    "yargs": "^6.6.0"
   }
 }
