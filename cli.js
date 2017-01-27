@@ -77,19 +77,51 @@ function checkForNewDomain(){
 
 function getPrevSettings(callback){
 	fs.readFile('./settings.json', 'utf8',(err,data) => {
-		if(err) { console.error(err); return; }
-		settings = JSON.parse(data);
+		if(!err){ 
+			settings = JSON.parse(data);
+		}
 		callback();
 	})
 }
 
 function saveSettings(){
+	if(!argv.p){
+		settings.loginInfo = { username: '', password: '' };
+	}
 	fs.writeFile('./settings.json',JSON.stringify(settings), err => {
 		if(err) {console.error(err)}
 	})
 }
 
-
+function checkForIds(callback){
+	if(!settings.coursesFolderID || !settings.adminID || !settings.templateID){
+		console.log("Missing some of the ids, please read the documentation on GitHub to get the following Ids\n Here is the link to github https://github.com/byuicampuscd/adobe-api-runner   :\n")
+		getCourseFolderID( getTemplateID, callback )
+	} else {
+		callback(null)
+	}
+}
+function getCourseFolderID(nextFunc, callback){
+	read({ prompt: 'Courses Folder ID: '}, (err, ID) => {
+		if(err) { callback(err); return }
+		settings.coursesFolderID = ID;
+		nextFunc(getAdminID, callback);
+	})
+}
+function getTemplateID(nextFunc, callback){
+	read({ prompt: 'Template ID: '}, (err, ID) => {
+		if(err) { callback(err); return }
+		settings.templateID = ID;
+		nextFunc(callback)
+	})
+}
+function getAdminID(callback){
+	read({ prompt: 'Admin Group ID: '}, (err, ID) => {
+		if(err) { callback(err); return }
+		settings.adminID = ID;
+		callback(null);
+	})
+}
 
 module.exports = {
 
@@ -99,9 +131,12 @@ module.exports = {
 				if(err) { console.error(err); callback(null); return; }
 				getLoginInfo( err => {
 					if(err) { console.error(err); callback(null); return }
-					checkForNewDomain();
-					callback(settings);
-					saveSettings();
+					checkForIds( err => {
+						if(err) { console.error(err); callback(null); return }
+						checkForNewDomain();
+						callback(settings);
+						saveSettings();
+					})
 				})
 			})
 		})
