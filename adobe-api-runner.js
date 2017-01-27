@@ -6,10 +6,6 @@ var cli = require('./cli');
 class Session {
 	constructor(settings,callback){
 		this.settings = settings;
-		if(!settings.coursesFolderID || !settings.adminID || !settings.templateID){
-			console.error("Missing some of the ids, please read the documentation, and add those IDs to the settings file");
-			return
-		}
 		this.login(settings.loginInfo, ableToLogin => {
 			if(ableToLogin){
 				callback();
@@ -113,69 +109,80 @@ class Instructor {
 }
 
 class Class {
+	
 	constructor(courseName,sectionNum,numOfMeetings){
-		// Conforming to Naming Conventions
-		courseName = courseName.replace(" ","_").toUpperCase();
-		sectionNum = ("00"+sectionNum).slice(-2);
-		var meetingName = courseName.replace("_","") + "_G0" + sectionNum + "_";
+		
+		// Conforming to Naming Conventions early on
+		this.numOfMeetings = numOfMeetings;
+		this.courseName = courseName.replace(" ","_").toUpperCase();
+		this.sectionNum = ("00"+sectionNum).slice(-2);
+		this.meetingName = this.courseName.replace("_","") + "_G0" + this.sectionNum + "_";
+		
+		// I have a bug where when a new course folder is created,
+		// the next calls to find that new folder fail, probably
+		// because the search is just getting a cached result
+		// so I am saving the ids of all the folders I create
 		this.savedCourseIDs = {};
 
 		// Creates the Course folder if not already created
-		this.getFolderID(session.settings.coursesFolderID,courseName, id => {
-			// I have a bug where when a new course folder is created,
-			// the next calls to find that new folder fail, probably
-			// because the search is just getting a cached result
-			// so I am saving the ids of all the folders I create
+		this.getFolderID(session.settings.coursesFolderID,this.courseName, id => {
+
+			// This may be triggerd for the reason described above
 			if(id == undefined){
-				if(this.savedCourseIDs[courseName] != undefined)
-					this.courseID = savedCourseIDs[courseName];
+				if(this.savedCourseIDs[this.courseName] != undefined)
+					this.courseID = savedCourseIDs[this.courseName];
 				else {
-					console.error("Error creating the course folder for "+courseName)
+					console.error("Error creating the course folder for "+this.courseName)
 					return;
 				}
 			}
-			this.savedCourseIDs[courseName] = id;
+			this.savedCourseIDs[this.courseName] = id;
 			this.courseID = id;
 			
-			
-			this.findFolderID(this.courseID,"SET_"+sectionNum, id => {
-				// section already created, only need to proceed if 
-				// they require more meetings than we already have
-				if(id){
+			// Checking to see if Section already Exists
+			this.findFolderID(this.courseID,"SET_"+this.sectionNum, id => {
+				if(id){ 
+					// section already exists, so check to see if it needs more meetings
 					this.sectionID = id;
-					this.getNumOfMeetings(this.sectionID, actualNum => {
-						if(actualNum == numOfMeetings){
-							console.error(courseName+"-"+sectionNum+" has already been created with "+numOfMeetings+" meetings");
-							return;
-						} else if(numOfMeetings < actualNum){
-							console.error(courseName+"-"+sectionNum+" has already been created with "+actualNum+" meetings, you only requested "+numOfMeetings);
-							return;
-						} else if(numOfMeetings > actualNum){
-							console.log("Creating "+(numOfMeetings-actualNum)+" additional meetings for "+courseName+"-"+sectionNum)
-							for(var i = actualNum+1; i <= numOfMeetings; i++){
-								this.createMeeting(this.sectionID,meetingName+("000"+i).slice(-3));
-							}
-						}
-					})
+					this.createMoreMeetings();
 				}
-				// section has not already been created, 
-				// so feel free to create all meetings
 				else {
-					this.createFolder(this.courseID,"SET_"+sectionNum, id => { 
-						if(id == undefined)
-							console.error("Error creating "+courseName+"-"+sectionNum)
-						else {
-							this.sectionID = id;
-							// Now we finally get to create the meetings!
-//							console.log("Creating the meetings for "+courseName+"-"+sectionNum)
-							for(var i = 1; i <= numOfMeetings; i++){
-								this.createMeeting(this.sectionID,meetingName+("000"+i).slice(-3));
-							}
-						}
-					})
+					this.createSection();
 				}
 			})
 		});
+	}
+	createMoreMeetings(){
+		this.getNumOfMeetings(this.sectionID, actualNum => {
+			if(actualNum == this.numOfMeetings){
+				console.error(this.courseName+"-"+this.sectionNum+" has already been created with "+this.numOfMeetings+" meetings");
+				return;
+			} else if(this.numOfMeetings < actualNum){
+				console.error(this.courseName+"-"+this.sectionNum+" has already been created with "+actualNum+" meetings, you only requested "+this.numOfMeetings);
+				return;
+			} else if(this.numOfMeetings > actualNum){
+				console.log("Creating "+(this.numOfMeetings-actualNum)+" additional meetings for "+this.courseName+"-"+this.sectionNum)
+				for(var i = actualNum+1; i <= this.numOfMeetings; i++){
+					this.meetingName += ("000"+i).slice(-3)
+					this.createMeeting();
+				}
+			}
+		})
+	}
+	createSection(){
+		this.createFolder(this.courseID,"SET_"+this.sectionNum, id => { 
+			if(id == undefined)
+				console.error("Error creating "+this.courseName+"-"+this.sectionNum)
+			else {
+				this.sectionID = id;
+				//  Now we finally get to create the meetings!
+				//	console.log("Creating the meetings for "+this.courseName+"-"+this.sectionNum)
+				for(var i = 1; i <= this.numOfMeetings; i++){
+					this.meetingName += ("000"+i).slice(-3)
+					this.createMeeting();
+				}
+			}
+		})
 	}
 	findFolderID(parentFolderID,folderName,callback){
 		session.sendRequest("sco-contents&sco-id="+parentFolderID+"&filter-name="+folderName,"scos.sco@sco-id", callback)
@@ -198,24 +205,24 @@ class Class {
 			callback(xmlDoc.childNamed("scos").childrenNamed("sco").length)
 		})
 	}
-	createMeeting(parentFolderID,meetingName){
+	createMeeting(){
 		// TODO: Need to insert template sco-id
-		var queryString = "sco-update&folder-id="+this.sectionID+"&type=meeting&name="+meetingName+"&source-sco-id="+session.settings.templateID+"&url-path="+meetingName.toLowerCase();
+		var queryString = "sco-update&folder-id="+this.sectionID+"&type=meeting&name="+this.meetingName+"&source-sco-id="+session.settings.templateID+"&url-path="+this.meetingName.toLowerCase();
 		session.sendRequest(queryString,"sco@sco-id", id => {
 			if(id == undefined)
-				console.error("Error creating "+meetingName);
+				console.error("Error creating "+this.meetingName);
 			else {
 				// Make this meeting public
 				var queryString = "permissions-update&acl-id="+id+"&principal-id=public-access&permission-id=view-hidden";
 				session.sendRequest(queryString,"status@code", status => {
 					if(status != "ok")
-						console.error("Error making "+meetingName+" public");
+						console.error("Error making "+this.meetingName+" public");
 					else {
 						// Make the teachers the host of the meeting
 						var queryString = "permissions-update&acl-id="+id+"&principal-id="+session.settings.adminID+"&permission-id=host";
 						session.sendRequest(queryString,"status@code", status => {
 							if(status != "ok")
-								console.error("Error making the teachers the host of "+meetingName);
+								console.error("Error making the teachers the host of "+this.meetingName);
 						})
 					}
 				})
@@ -224,20 +231,34 @@ class Class {
 	}
 }
 
-var session;
 
+// MAIN
+
+var session;
 cli.getSettings(settings => {
+	// There was an error with getting the settings
 	if(!settings) {return}
+	
+	// Creating an instance of Session, with the "settings" logs us in,
+	// and saves my session cookie
 	session = new Session(settings,() => {
+		
+		// There is probably a better way to do this, but works for now
 		fs.readFile(settings.csv,'utf8',(err,data) => {
 			if(err) { console.error(err) }
+			
 			// Parsing the CSV in one line!
 			var array = data.split('\r\n').slice(1,-1).map( x => x.split(','));
+			
+			// For each line in the CSV
 			for(var i = 0; i < array.length; i++){
-				// checking for valid data
+				
+				// minimal data validation
 				if(array[i][0] && array[i][1]){
-					// calling my ginourmous Class constructor for each element
+					
+					// calling my ginourmous Class constructor for each line in the CSV
 					var myClass = new Class(array[i][0],array[i][1],(array[i][2]?(array[i][2]*1):10));
+				
 				} else {
 					console.log("There was a problem with line "+(i+2)+" in the file");
 				}
