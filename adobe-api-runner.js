@@ -132,7 +132,7 @@ class Class {
 				if(this.savedCourseIDs[this.courseName] != undefined)
 					this.courseID = savedCourseIDs[this.courseName];
 				else {
-					console.error("Error creating the course folder for "+this.courseName)
+					console.error("Error creating the course folder for "+this.courseName+" Check the courses folder ID in the settings file")
 					return;
 				}
 			}
@@ -210,7 +210,7 @@ class Class {
 		var queryString = "sco-update&folder-id="+this.sectionID+"&type=meeting&name="+this.meetingName+"&source-sco-id="+session.settings.templateID+"&url-path="+this.meetingName.toLowerCase();
 		session.sendRequest(queryString,"sco@sco-id", id => {
 			if(id == undefined)
-				console.error("Error creating "+this.meetingName);
+				console.error("Error creating "+this.meetingName+" Check the template ID in the settings file");
 			else {
 				// Make this meeting public
 				var queryString = "permissions-update&acl-id="+id+"&principal-id=public-access&permission-id=view-hidden";
@@ -222,7 +222,7 @@ class Class {
 						var queryString = "permissions-update&acl-id="+id+"&principal-id="+session.settings.adminID+"&permission-id=host";
 						session.sendRequest(queryString,"status@code", status => {
 							if(status != "ok")
-								console.error("Error making the teachers the host of "+this.meetingName);
+								console.error("Error making the teachers the host of "+this.meetingName+" Check the admin ID in the settings file");
 						})
 					}
 				})

@@ -95,7 +95,7 @@ function saveSettings(){
 
 function checkForIds(callback){
 	if(!settings.coursesFolderID || !settings.adminID || !settings.templateID){
-		console.log("Missing some of the ids, please read the documentation on GitHub to get the following Ids\n Here is the link to github https://github.com/byuicampuscd/adobe-api-runner   :\n")
+		console.log("Missing some of the ids, please read the documentation on GitHub to get the following Ids\n Here is the link to github > https://github.com/byuicampuscd/adobe-api-runner < If your on windows 10 I think you can paste by right clicking in the command prompt:\n")
 		getCourseFolderID( getTemplateID, callback )
 	} else {
 		callback(null)
