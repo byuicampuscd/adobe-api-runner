@@ -7,7 +7,7 @@ class Session {
 	constructor(settings,callback){
 		this.settings = settings;
 		if(!settings.coursesFolderID || !settings.adminID || !settings.templateID){
-			console.error("Missing some of the ids, please read the documentation, and add those the the settings file");
+			console.error("Missing some of the ids, please read the documentation, and add those IDs to the settings file");
 			return
 		}
 		this.login(settings.loginInfo, ableToLogin => {
