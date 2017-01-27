@@ -10,7 +10,7 @@ A command line program, which creates adobe connect meetings which it reads from
 - Log into Adobe Connect and navigate to the folder that contains all the course folders
 - Look at the URL and find the part that says "sco-id"
 `...&sco-id=1018231140&...`
-- copy and paste that number into the settings
+- copy and paste that number into the settings or when prompted
 `"coursesFolderID":1018231140,`
 
 ##### Template ID
@@ -18,7 +18,7 @@ A command line program, which creates adobe connect meetings which it reads from
 - Navigate to that meeting so you are looking at all of its Meeting Information
 - Again look at its URL and find the part that says "sco-id"
 `...&sco-id=1017911573&...`
-- copy and paste that number into the settings
+- copy and paste that number into the settings or when prompted
 `"templateID":1017911573`
 
 
@@ -28,5 +28,5 @@ A command line program, which creates adobe connect meetings which it reads from
 - Press the "Information" button in the bottom right corner
 - Once again look at the URL and find the part that says "principal-id" 
 `...&principal-id=1017936982&...`
-- copy and paste that number into the settings
+- copy and paste that number into the settings or when prompted
 `"adminID":1017936982,`
