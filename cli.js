@@ -2,8 +2,11 @@ var read = require('read');
 var argv = require('yargs').argv;
 var fs = require('fs');
 
+
+
 var settings = {
-	csv: '',
+	sectionList: '',
+	courseList: '',
 	loginInfo: {
 		username: '',
 		password: ''
@@ -23,35 +26,65 @@ function validateFilePath(string,callback){
 	})
 }
 
-function askForCSV(callback){
-	read({prompt: "\nPlease enter the path to the CSV file that contains the courses: "}, (err,answer) => {
-		if(err) {callback(err); return}
-		validateFilePath(answer, err => {
-			if(err) { callback(err); return}
-			settings.csv = answer;
-			callback(null)
-			return;
-		})
-	})
+function getCSVs(callback){
+	// Starting another chain of async functions :P
+	getArgS(callback)
 }
 
-function getCSV(callback){
-	
-	// if they gave us a file name in the command line use it
-	if(argv.f){
-		validateFilePath(argv.f, err => {
-			if(err) { callback(err); return}
-			settings.csv = argv.f;
-			callback(null);
-			return;
+function getArgS(callback){
+	if(argv.s){
+		validateFilePath(argv.s, err => {
+			if(err) {
+				console.log("Invalid Path")
+			} else
+				settings.sectionList = argv.s;
+			getArgC(callback);
 		})
-	// if it isn't already in the settings then ask for it
-	} else if(!settings.csv) {
-		askForCSV(callback);
-	} else {
-		callback(null)
-	}
+	} else
+		getArgC(callback);
 }
+function getArgC(callback){
+	if(argv.c){
+		validateFilePath(argv.c, err => {
+			if(err) {
+				console.log("Invalid Path")
+			} else
+				settings.courseList = argv.c;
+			askForSectionList(callback)
+		})
+	} else
+		askForSectionList(callback)
+}
+
+function askForSectionList(callback){
+	if(!settings.sectionList){
+		read({prompt: "\nPlease enter the name of the section list CSV: "}, (err,answer) => {
+			if(err) {callback(err); return}
+			validateFilePath(answer, err => {
+				if(err) { callback(err); return}
+				settings.sectionList = answer;
+				askForCourseList(callback)
+			})
+		})
+	} else
+		askForCourseList(callback)
+}
+
+function askForCourseList(callback){
+	if(!settings.courseList){
+		read({prompt: "\nPlease enter the name of the course list CSV: "}, (err,answer) => {
+			if(err) {callback(err); return}
+			validateFilePath(answer, err => {
+				if(err) { callback(err); return}
+				settings.courseList = answer;
+				callback(null)
+			})
+		})
+	} else
+		callback(null)
+}
+
+
 
 function getLoginInfo(callback){
 	if(argv.p && settings.loginInfo.username && settings.loginInfo.password){
@@ -85,6 +118,7 @@ function getPrevSettings(callback){
 }
 
 function saveSettings(){
+	// use '-p' to save your password in the settings file, and not have to keep typing it
 	if(!argv.p){
 		settings.loginInfo = { username: '', password: '' };
 	}
@@ -127,7 +161,7 @@ module.exports = {
 
 	getSettings: function(callback){
 		getPrevSettings( () => {
-			getCSV( err => {
+			getCSVs( err => {
 				if(err) { console.error(err); callback(null); return; }
 				getLoginInfo( err => {
 					if(err) { console.error(err); callback(null); return }
