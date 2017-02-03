@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/byuicampuscd/adobe-api-runner#readme",
   "dependencies": {
+    "async": "^2.1.4",
+    "d3-dsv": "^1.0.3",
     "read": "^1.0.7",
     "xmldoc": "^1.0.0",
     "yargs": "^6.6.0"
