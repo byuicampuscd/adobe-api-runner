@@ -30,7 +30,6 @@ function getCSVs(callback){
 	// Starting another chain of async functions :P
 	getArgS(callback)
 }
-
 function getArgS(callback){
 	if(argv.s){
 		validateFilePath(argv.s, err => {
@@ -55,7 +54,6 @@ function getArgC(callback){
 	} else
 		askForSectionList(callback)
 }
-
 function askForSectionList(callback){
 	if(!settings.sectionList){
 		read({prompt: "\nPlease enter the name of the section list CSV: "}, (err,answer) => {
@@ -69,7 +67,6 @@ function askForSectionList(callback){
 	} else
 		askForCourseList(callback)
 }
-
 function askForCourseList(callback){
 	if(!settings.courseList){
 		read({prompt: "\nPlease enter the name of the course list CSV: "}, (err,answer) => {
@@ -83,8 +80,6 @@ function askForCourseList(callback){
 	} else
 		callback(null)
 }
-
-
 
 function getLoginInfo(callback){
 	if(argv.p && settings.loginInfo.username && settings.loginInfo.password){
