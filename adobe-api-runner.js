@@ -3,7 +3,8 @@ var https = require('https');
 var fs = require('fs');
 var cli = require('./cli');
 var dsv = require('d3-dsv');
-var asyn = require('async')
+var asyn = require('async');
+var argv = require('yargs').argv;
 var defaultNumOfMeetings = 10;
 
 class Main {
@@ -27,20 +28,21 @@ class Main {
 			res.on('end', () => {
 				let doc;
 				let failed = false;
-				try{
+				if(!body){
+					callback(" Overwellmed Server",undefined)
+				} else {
 					doc = new xmldoc.XmlDocument(body);
-				} catch (e) {
-					failed = true;
-					callback("Error: Overwellmed Server",undefined)
-				} finally {
-					if(!failed){
+					var status = doc.valueWithPath("status@code")
+					if(status == "ok"){
 						if(xmlPath)
 							callback(null,doc.valueWithPath(xmlPath));
 						else
 							callback(null,doc);
+					} else {
+						callback(" Returned status:"+status+(argv.v ? "\nSent query string: "+queryString+"\n"+body : ""),undefined)
 					}
-				}
 
+				}
 			})
 		})
 		req.on('error', callback);
@@ -179,7 +181,7 @@ class Main {
 		
 		// get list of previous meeting names
 		this.getContents(section.ID, (err,prevMeets) => {
-			if(err) { sectCallback("Couldn't get prev meeting names of "+courseName+"-"+section.name,0) }
+			if(err) { sectCallback("Couldn't get prev meeting names of "+courseName+"-"+section.name+err,0) }
 
 			// Create array of all needed meeting names
 			var meetings = [];
@@ -188,6 +190,8 @@ class Main {
 
 			// filter out the meetings that already exist
 			meetings = meetings.filter( x => prevMeets.indexOf(x) < 0)
+
+			console.log(prevMeets,meetings)
 
 			// Creating each of the meetings
 			asyn.map(meetings, (meetingName,callback) => {
@@ -200,7 +204,6 @@ class Main {
 				sectCallback(err,results)
 			})
 		})
-
 	}
 
 	getContents(folderID,callback){
@@ -244,9 +247,7 @@ class Meeting{
 	makeMeeting(callback){
 		var queryString = "sco-update&folder-id="+this.sectionID+"&type=meeting&name="+this.meetingName+"&source-sco-id="+main.settings.templateID+"&url-path="+this.meetingName.toLowerCase();
 		main.sendRequest(queryString,"sco@sco-id", (err,id) => {
-			if(err) { this.callback(err); return }
-			if(!id) { this.callback("Couldn't create "+this.meetingName+" because something is invalid"); return }
-
+			if(err) { this.callback("Couldn't create "+this.meetingName+err); return }
 			this.id = id;
 			this.makePublic()
 		})
@@ -254,18 +255,14 @@ class Meeting{
 	makePublic(id,callback){
 		var queryString = "permissions-update&acl-id="+this.id+"&principal-id=public-access&permission-id=view-hidden";
 		main.sendRequest(queryString,"status@code", (err, status) => {
-			if(err) { this.callback(err); return }
-			if(status != "ok") { this.callback("Error making "+this.meetingName+" public because something is invalid"); return}
-
+			if(err) { this.callback("Error making "+this.meetingName+" public"+err); return}
 			this.setHost()
 		})
 	}
 	setHost(callback){
 		var queryString = "permissions-update&acl-id="+this.id+"&principal-id="+main.settings.adminID+"&permission-id=host";
 		main.sendRequest(queryString,"status@code", (err, status) => {
-			if(err) { this.callback(err); return }
-			if(status != "ok") { this.callback("Coudn't set the host of "+this.meetingName+" because something is invalid"); return }
-
+			if(err) { this.callback("Coudn't set the host of "+this.meetingName+err); return }
 			this.callback(null)
 		})
 	}
