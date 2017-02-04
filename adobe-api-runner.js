@@ -191,8 +191,6 @@ class Main {
 			// filter out the meetings that already exist
 			meetings = meetings.filter( x => prevMeets.indexOf(x) < 0)
 
-			console.log(prevMeets,meetings)
-
 			// Creating each of the meetings
 			asyn.map(meetings, (meetingName,callback) => {
 
