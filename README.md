@@ -41,3 +41,13 @@ A command line program, which creates adobe connect meetings which it reads from
 `...&principal-id=1017936982&...`
 - copy and paste that number into the settings or when prompted
 `"adminID":1017936982,`
+
+### Command Line Stuff
+
+Symbol | Description
+-------|------------
+`-c <courseList.csv>` |  Enter the name of the courseList as an argument
+`-s <sectionList.csv>` |  Enter the name of the sectionList as an argument
+`-d <domain>` | change the domain from the default 'byui' ex. `node adobe-api-runner -d benjameep   => http://benjameep.adobeconnect.com/`
+`-v`   | Prints the queryString and XML when it errors
+`-p`   | Saves credentials, and skips login. For debugging. Not reccomended for normal use
