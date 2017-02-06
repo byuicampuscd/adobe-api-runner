@@ -131,21 +131,21 @@ function checkForIds(callback){
 	}
 }
 function getCourseFolderID(nextFunc, callback){
-	read({ prompt: 'Courses Folder ID: '}, (err, ID) => {
+	read({ prompt: 'Courses Folder ID (sco-id): '}, (err, ID) => {
 		if(err) { callback(err); return }
 		settings.coursesFolderID = ID;
 		nextFunc(getAdminID, callback);
 	})
 }
 function getTemplateID(nextFunc, callback){
-	read({ prompt: 'Template ID: '}, (err, ID) => {
+	read({ prompt: 'Template ID (sco-id): '}, (err, ID) => {
 		if(err) { callback(err); return }
 		settings.templateID = ID;
 		nextFunc(callback)
 	})
 }
 function getAdminID(callback){
-	read({ prompt: 'Admin Group ID: '}, (err, ID) => {
+	read({ prompt: 'Admin Group ID (principal-id): '}, (err, ID) => {
 		if(err) { callback(err); return }
 		settings.adminID = ID;
 		callback(null);

@@ -81,7 +81,7 @@ class Main {
 			var numMeetLookUp =  dsv.csvParse(table)
 			if(numMeetLookUp.columns.indexOf("Course Name") == -1 ||
 			   numMeetLookUp.columns.indexOf("Number of Meetings") == -1){
-				console.error("Error: Your table headings aren't 'Course Name' and 'Number of Meetings'")
+				console.error("Error: Your Course List headings didn't have 'Course Name' and 'Number of Meetings'")
 				return;
 			}
 
@@ -99,7 +99,7 @@ class Main {
 				if(data.columns.indexOf("Course Name") == -1 ||
 				   data.columns.indexOf("Section") == -1 ||
 				   data.columns.indexOf("Number of Meetings") == -1){
-					console.error("Error: Your table headings aren't 'Course Name' , 'Section' , 'Number of Meetings'")
+					console.error("Error: Your Section List headings didn't have 'Course Name' , 'Section' and 'Number of Meetings'")
 					return;
 				}
 				
