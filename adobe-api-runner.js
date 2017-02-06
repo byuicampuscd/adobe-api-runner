@@ -5,6 +5,7 @@ var cli = require('./cli');
 var dsv = require('d3-dsv');
 var asyn = require('async');
 var argv = require('yargs').argv;
+var ProgressBar = require('progress');
 var defaultNumOfMeetings = 10;
 
 class Main {
@@ -109,7 +110,7 @@ class Main {
 					return {
 						course : cName,
 						section : ("000"+d["Section"]).slice(-3),
-						numMeet : d["Number of Meetings"] ? d["Number of Meetings"] : (numMeetLookUp[cName] ? numMeetLookUp[cName] : defaultNumOfMeetings)
+						numMeet : +(d["Number of Meetings"] ? d["Number of Meetings"] : (numMeetLookUp[cName] ? numMeetLookUp[cName] : defaultNumOfMeetings))
 					}
 				}).filter( x => x.course )
 				
@@ -129,11 +130,13 @@ class Main {
 
 			// check to see if we haven't come across this one already
 			if(!this.courses[row.course])
-				this.courses[row.course] = { ID:0, name:row.course, sections:{}}
+				this.courses[row.course] = { ID:0, name:row.course, sections:{}, totalMeetings:0}
 
 			// then create the section object (if it hasn't already been)
 			if(!this.courses[row.course].sections[row.section])
 				this.courses[row.course].sections[row.section] = { ID:0, name:row.section, numMeet:row.numMeet, meetings:{} }
+
+			this.courses[row.course].totalMeetings += row.numMeet;
 		})
 
 
@@ -143,6 +146,14 @@ class Main {
 
 		// for each course
 		asyn.mapLimit(this.courses,1, (course,courCallback) => {
+
+			console.log(course.name)
+			this.progBar = new ProgressBar('\t[:bar] :percent',{
+				width:10,
+				total: course.totalMeetings,
+				clear:true
+			})
+
 			// Create the course folder
 			new Folder(this.settings.coursesFolderID,course.name, (err,courseID) => {
 				if(err) { courCallback(err,0); return; }
@@ -159,15 +170,14 @@ class Main {
 
 						// And then do everything else
 						this.createMeetings(course.name,section,sectCallback)
-
 					})
 				}, (err, results) => {
 					// Done with this Course
 					// results is an array of arrays of errors
 					if(err)
 						console.error(err)
-					else
-						console.log("Done with "+course.name)
+//					else
+//						console.log("Done with "+course.name)
 					courCallback(err,results.length);
 				})
 			})
@@ -190,11 +200,13 @@ class Main {
 
 			// filter out the meetings that already exist
 			meetings = meetings.filter( x => prevMeets.indexOf(x) < 0)
+			this.progBar.tick(section.numMeet-meetings.length)
 
 			// Creating each of the meetings
 			asyn.map(meetings, (meetingName,callback) => {
 
 				new Meeting(meetingName,section.ID, err => {
+					this.progBar.tick()
 					callback(err,err)
 				})
 
