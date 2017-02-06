@@ -1,5 +1,7 @@
 settings.json
 node_modules
 *.csv
+!sectionListSample.csv
+!courseListSample.csv
 test.js
 oldVersion.js
