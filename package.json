@@ -19,6 +19,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "d3-dsv": "^1.0.3",
+    "progress": "^1.1.8",
     "read": "^1.0.7",
     "xmldoc": "^1.0.0",
     "yargs": "^6.6.0"
