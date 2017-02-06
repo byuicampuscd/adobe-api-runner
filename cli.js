@@ -82,7 +82,7 @@ function askForCourseList(callback){
 }
 
 function getLoginInfo(callback){
-	if(argv.p && settings.loginInfo.username && settings.loginInfo.password){
+	if(argv.p || (settings.loginInfo.username && settings.loginInfo.password)){
 		callback(null);
 	} else {
 		read({ prompt: '\nUsername/Email: '}, (err, username) => {
@@ -114,10 +114,11 @@ function getPrevSettings(callback){
 
 function saveSettings(){
 	// use '-p' to save your password in the settings file, and not have to keep typing it
+	var cloneSettings = JSON.parse(JSON.stringify(settings))
 	if(!argv.p){
-		settings.loginInfo = { username: '', password: '' };
+		cloneSettings.loginInfo = { username: '', password: '' };
 	}
-	fs.writeFile('./settings.json',JSON.stringify(settings), err => {
+	fs.writeFile('./settings.json',JSON.stringify(cloneSettings), err => {
 		if(err) {console.error(err)}
 	})
 }
@@ -163,8 +164,8 @@ module.exports = {
 					checkForIds( err => {
 						if(err) { console.error(err); callback(null); return }
 						checkForNewDomain();
-						callback(settings);
 						saveSettings();
+						callback(settings);
 					})
 				})
 			})
