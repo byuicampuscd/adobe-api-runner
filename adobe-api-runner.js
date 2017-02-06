@@ -147,12 +147,15 @@ class Main {
 		// for each course
 		asyn.mapLimit(this.courses,1, (course,courCallback) => {
 
-			console.log(course.name)
-			this.progBar = new ProgressBar('\t[:bar] :percent',{
+			this.progBar = new ProgressBar(course.name+' :percent',{
 				width:10,
-				total: course.totalMeetings,
-				clear:true
+				total: course.totalMeetings+Object.keys(course.sections).length+2,
+				clear:true,
+				callback: function(){
+					console.log(course.name)
+				}
 			})
+			this.progBar.tick()
 
 			// Create the course folder
 			new Folder(this.settings.coursesFolderID,course.name, (err,courseID) => {
@@ -160,6 +163,7 @@ class Main {
 				// save the ID
 				this.courses[course.name].ID = courseID;
 
+				this.progBar.tick()
 				// For each section in this course
 				asyn.map(this.courses[course.name].sections,(section,sectCallback) => {
 					// Create the section folder
@@ -167,6 +171,8 @@ class Main {
 						if(err) { sectCallback(err,0); return; }
 						// save the ID
 						this.courses[course.name].sections[section.name].ID = sectionID;
+
+						this.progBar.tick()
 
 						// And then do everything else
 						this.createMeetings(course.name,section,sectCallback)
