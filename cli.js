@@ -82,7 +82,7 @@ function askForCourseList(callback){
 }
 
 function getLoginInfo(callback){
-	if(argv.p || (settings.loginInfo.username && settings.loginInfo.password)){
+	if(settings.loginInfo.username && settings.loginInfo.password){
 		callback(null);
 	} else {
 		read({ prompt: '\nUsername/Email: '}, (err, username) => {
