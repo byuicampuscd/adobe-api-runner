@@ -18,10 +18,12 @@ class Main {
 		this.login(settings.loginInfo, ableToLogin => {
 			if(!ableToLogin){ console.error("Unable to login"); return; }
 
-			this.parseFiles( err => {
-				if(err){console.error(err); return}
-				this.createEverything();
-			});
+			if(!argv.n){
+				this.parseFiles( err => {
+					if(err){console.error(err); return}
+					this.createEverything();
+				});
+			}
 		})
 	}
 
