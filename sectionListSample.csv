@@ -1,10 +1,10 @@
 Course Name,Section,Number of Meetings,comments
 A 100,2,,This will get however many meetings were set for this course in the Course List file
-A 100,4,,If the course is not listed in the Course List file it will get 10 meetings
+A 100,4,,
 A 100,7,,
 A 100,8,12,This numOfMeetings overides the default set for this course
 A 120,3,,
 A 120,5,0,This section will be created without any meetings
 B 320,2,,
 B 320,3,,
-C 220,18,,
+C 220,18,,This section will not be created, because It is not listed in the courseList.csv

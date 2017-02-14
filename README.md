@@ -49,5 +49,5 @@ Symbol | Description
 `-c <courseList.csv>` |  Enter the name of the courseList as an argument
 `-s <sectionList.csv>` |  Enter the name of the sectionList as an argument
 `-d <domain>` | change the domain from the default 'byui' ex. `node adobe-api-runner -d benjameep   => http://benjameep.adobeconnect.com/`
-`-v`   | Prints the queryString and XML when it errors
+`-v`   | Prints the queryString and XML when it errors, also prints out which courses are skipped
 `-p`   | Saves credentials, and skips login. For debugging. Not reccomended for normal use
