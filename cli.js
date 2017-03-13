@@ -168,6 +168,7 @@ module.exports = {
 		getPrevSettings( () => {
 			getCSVs( err => {
 				if(err) { console.error(err); callback(null); return; }
+                saveSettings();
 				getLoginInfo( err => {
 					if(err) { console.error(err); callback(null); return }
 					checkForIds( err => {
