@@ -6,7 +6,10 @@ var dsv = require('d3-dsv');
 var asyn = require('async');
 var argv = require('yargs').argv;
 var ProgressBar = require('progress');
-var defaultNumOfMeetings = 10;
+var skippedClassesFlag = false;
+// number of meetings to be set if course not
+// listed in courseList (used to be 10)
+var defaultNumOfMeetings = 0;
 
 class Main {
 	constructor(settings,callback){
@@ -15,10 +18,12 @@ class Main {
 		this.login(settings.loginInfo, ableToLogin => {
 			if(!ableToLogin){ console.error("Unable to login"); return; }
 
-			this.parseFiles( err => {
-				if(err){console.error(err); return}
-				this.createEverything();
-			});
+			if(!argv.n){
+				this.parseFiles( err => {
+					if(err){console.error(err); return}
+					this.createEverything();
+				});
+			}
 		})
 	}
 
@@ -110,7 +115,7 @@ class Main {
 					return {
 						course : cName,
 						section : ("000"+d["Section"]).slice(-3),
-						numMeet : +(d["Number of Meetings"] ? d["Number of Meetings"] : (numMeetLookUp[cName] ? numMeetLookUp[cName] : defaultNumOfMeetings))
+						numMeet : +(d["Number of Meetings"] ? +d["Number of Meetings"] : (numMeetLookUp[cName] ? numMeetLookUp[cName] : defaultNumOfMeetings))
 					}
 				}).filter( x => x.course )
 				
@@ -139,6 +144,28 @@ class Main {
 			this.courses[row.course].totalMeetings += row.numMeet;
 		})
 
+		// check and delete courses that don't contain any meetings
+		// also print out the courses which are getting skipped if -v is on
+		for(var course in this.courses){
+			if(this.courses[course].totalMeetings == 0){
+				if(!skippedClassesFlag && argv.v){
+					console.log("\n\
+****************************************************\n\
+The following courses have been skipped,\n\
+because they weren't assigned any amount of meetings\n\
+check to see if they were listed in the courseList file\n\
+****************************************************")
+					skippedClassesFlag = true
+				}
+				if(argv.v){
+					console.log(course)
+				}
+				delete this.courses[course]
+			}
+		}
+		if(skippedClassesFlag && argv.v){
+			console.log("--------------------\n")
+		}
 
 	}
 
@@ -156,6 +183,7 @@ class Main {
 				}
 			})
 			this.progBar.tick()
+
 
 			// Create the course folder
 			new Folder(this.settings.coursesFolderID,course.name, (err,courseID) => {
@@ -182,8 +210,6 @@ class Main {
 					// results is an array of arrays of errors
 					if(err)
 						console.error(err)
-//					else
-//						console.log("Done with "+course.name)
 					courCallback(err,results.length);
 				})
 			})

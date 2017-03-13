@@ -46,8 +46,9 @@ A command line program, which creates adobe connect meetings which it reads from
 
 Symbol | Description
 -------|------------
-`-c <courseList.csv>` |  Enter the name of the courseList as an argument
-`-s <sectionList.csv>` |  Enter the name of the sectionList as an argument
-`-d <domain>` | change the domain from the default 'byui' ex. `node adobe-api-runner -d benjameep   => http://benjameep.adobeconnect.com/`
-`-v`   | Prints the queryString and XML when it errors
+`-c <courseList.csv>` |  courseList file name as an argument
+`-s <sectionList.csv>` |  sectionList file name as an argument
+`-d <domain>` | domain change from the default 'byui' ex. `node adobe-api-runner -d benjameep   => http://benjameep.adobeconnect.com/`
+`-v`   | Verbose, Prints the queryString and XML when it errors, also prints out which courses are skipped
+`-n`   | No operations, for tweaking with settings without running the actual program
 `-p`   | Saves password and username as plaintext, and skips login. For debugging. Not reccomended for normal use

@@ -1,7 +1,7 @@
 var read = require('read');
 var argv = require('yargs').argv;
 var fs = require('fs');
-
+var path = require('path')
 
 
 var settings = {
@@ -15,6 +15,13 @@ var settings = {
 	coursesFolderID : 0,
 	adminID : 0,
 	templateID : 0
+}
+
+function format(input) {
+	var raw = path.parse(input);
+	raw.ext = '.csv'
+	raw.base = ''
+	return path.format(raw)
 }
 
 function validateFilePath(string,callback){
@@ -58,6 +65,7 @@ function askForSectionList(callback){
 	if(!settings.sectionList){
 		read({prompt: "\nPlease enter the name of the section list CSV: "}, (err,answer) => {
 			if(err) {callback(err); return}
+            answer = format(answer)
 			validateFilePath(answer, err => {
 				if(err) { callback(err); return}
 				settings.sectionList = answer;
@@ -71,6 +79,7 @@ function askForCourseList(callback){
 	if(!settings.courseList){
 		read({prompt: "\nPlease enter the name of the course list CSV: "}, (err,answer) => {
 			if(err) {callback(err); return}
+            answer = format(answer)
 			validateFilePath(answer, err => {
 				if(err) { callback(err); return}
 				settings.courseList = answer;

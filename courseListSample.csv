@@ -1,4 +1,5 @@
 Course Name,Number of Meetings,comments
 A 100,3,All A 100 courses will be created with 3 meetings
 A 120,8,
-B 320,10,Courses set with 10 meetings dont need to be listed because that is the default
+B 320,10,Courses not listed here (ex."C 220") will not be created
+D 100,0,Also courses with 0 meetings will not be created at all
