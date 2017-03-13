@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A super cool adobe connect API runner that creates a bunch of meetings",
   "main": "adobe-api-runner.js",
+  "bin": {
+    "adobe-api-runner": "adobe-api-runner.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +19,7 @@
     "url": "https://github.com/byuicampuscd/adobe-api-runner/issues"
   },
   "homepage": "https://github.com/byuicampuscd/adobe-api-runner#readme",
+  "preferGlobal": "true",
   "dependencies": {
     "async": "^2.1.4",
     "d3-dsv": "^1.0.3",
@@ -23,5 +27,6 @@
     "read": "^1.0.7",
     "xmldoc": "^1.0.0",
     "yargs": "^6.6.0"
-  }
+  },
+  "devDependencies": {}
 }

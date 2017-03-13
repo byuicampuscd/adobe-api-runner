@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var xmldoc = require('xmldoc');
 var https = require('https');
 var fs = require('fs');
