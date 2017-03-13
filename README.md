@@ -50,4 +50,4 @@ Symbol | Description
 `-s <sectionList.csv>` |  Enter the name of the sectionList as an argument
 `-d <domain>` | change the domain from the default 'byui' ex. `node adobe-api-runner -d benjameep   => http://benjameep.adobeconnect.com/`
 `-v`   | Prints the queryString and XML when it errors
-`-p`   | Saves credentials, and skips login. For debugging. Not reccomended for normal use
+`-p`   | Saves password and username as plaintext, and skips login. For debugging. Not reccomended for normal use
