@@ -4,7 +4,7 @@ A command line program, which creates adobe connect meetings which it reads from
 ### How To Install
 - Install [Node.js](https://nodejs.org/en/)
 - Download This repository
-- Unzip this repository to where you want the file to sit
+- Unzip/Extract this repository to where you want the file to sit
 - Open File Explorer and navigate to this unzipped folder
 - Take your list of courses, and save it as a CSV (comma delimited) to this folder
 - Hold down shift and right click in the blank area of file explorer to get the option to open command prompt there
