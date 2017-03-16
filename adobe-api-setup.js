@@ -10,7 +10,7 @@ function call(runMe) { return runMe(...[...arguments].slice(1)) }
 
 function getIDs(settings){
     console.log("Missing some of the ids, please read the documentation on GitHub to get the following Ids\nYou should be able to paste into the command line by right-clicking")
-//    run.exec("start https://github.com/byuitechops/adobe-api-runner#how-to-find-the-adobe-connect-ids", () => {})
+    run.exec("start https://github.com/byuitechops/adobe-api-runner#how-to-find-the-adobe-connect-ids", () => {})
     // call, calls the function that is returned from getInput
     return call(getInput(settings,'coursesFolderID','Courses Folder ID (sco-id): '),settings)
                 .then(getInput(settings,'templateID','Template ID (sco-id): '))

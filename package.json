@@ -9,7 +9,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "adobe-api-setup"
   },
   "repository": {
     "type": "git",
