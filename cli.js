@@ -59,7 +59,7 @@ module.exports = {
                     if(err) { console.error(err); callback(null); return }
                     checkForNewDomain();
                     saveSettings();
-                    console.log(settings)
+                    callback(settings)
                 })
             })
         })
