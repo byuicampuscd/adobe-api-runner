@@ -2,19 +2,14 @@
 A command line program, which creates adobe connect meetings which it reads from a csv file
 
 ### How To Install
-- Install [Node.js](https://nodejs.org/en/)
-- Download this repository
-- Unzip/Extract this repository to where you want the file to sit
-- Open File Explorer and navigate to this unzipped folder
-- Take your list of courses, and save it as a CSV (comma delimited) to this folder
-- Hold down shift and right click in the blank area of file explorer to get the option to open command prompt there
-![Screen Shot](/Screen%20Shot.png)
-- The black window should open up, type in `npm install -g`
+- Install [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/downloads)
+- Open up Command Prompt
+- type or paste `npm install -g https://github.com/byuitechops/adobe-api-runner.git`
 - There should be a funny loading bar and a bunch of stuff pop onto the screen
-- next type in `node adobe-api-runner`
-- a prompt should pop up asking for the name of your CSV Course List
-- next it will complain that it dosen't have any adobe IDs
-- follow the instructions below to get those
+- next type in `adobe-api-runner`
+- On the first run it will ask for your adobe IDs, which can be found with the instructions below
+- next it will ask for your csv files
+- You might need to paste the full path to the files, such as `C:\Users\<me>\Documents\Adobe Connect Stuff\courseList.csv`
 
 ### How to Find the Adobe Connect IDs
 ##### Courses Folder ID
@@ -42,12 +37,15 @@ A command line program, which creates adobe connect meetings which it reads from
 - copy and paste that number into the settings or when prompted
 `"adminID":1017936982,`
 
+### How to reset Adobe Connect IDs
+- You are going to have to dig up the settings file and assassinate it
+- It should be found in `C:\Users\<me>\AppData\Roaming\npm\node_modules\adobe-api-runner\settings.json`
+- You can either edit it directly or just delete it, and the next time you run the program it will ask for the IDs again
+
 ### Command Line Stuff
 
 Symbol | Description
 -------|------------
-`-c <courseList.csv>` |  courseList file name as an argument
-`-s <sectionList.csv>` |  sectionList file name as an argument
 `-d <domain>` | domain change from the default 'byui' ex. `node adobe-api-runner -d benjameep   => http://benjameep.adobeconnect.com/`
 `-v`   | Verbose, Prints the queryString and XML when it errors, also prints out which courses are skipped
 `-n`   | No operations, for tweaking with settings without running the actual program
