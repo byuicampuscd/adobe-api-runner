@@ -4,7 +4,7 @@ A command line program, which creates adobe connect meetings which it reads from
 ### How To Install
 - Install [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/downloads)
 - Open up Command Prompt
-- type or paste `npm install -g https://github.com/byuitechops/adobe-api-runner.git`
+- type or paste `npm install -g byuitechops/adobe-api-runner`
 - There should be a funny loading bar and a bunch of stuff pop onto the screen
 - next type in `adobe-api-runner`
 - On the first run it will ask for your adobe IDs, which can be found with the instructions below
