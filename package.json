@@ -4,10 +4,12 @@
   "description": "A super cool adobe connect API runner that creates a bunch of meetings",
   "main": "adobe-api-runner.js",
   "bin": {
-    "adobe-api-runner": "adobe-api-runner.js"
+    "adobe-api-runner": "adobe-api-runner.js",
+    "adobe-api-setup": "adobe-api-setup.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "adobe-api-setup"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   "dependencies": {
     "async": "^2.1.4",
     "d3-dsv": "^1.0.3",
+    "npm-run": "^4.1.1",
     "progress": "^1.1.8",
     "read": "^1.0.7",
     "xmldoc": "^1.0.0",

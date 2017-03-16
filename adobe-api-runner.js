@@ -316,8 +316,5 @@ let main;
 
 cli.getSettings(settings => {
 	if(!settings) {return;}
-	
-	main = new Main(settings, () => {
-
-	})
+    main = new Main(settings, () => {})
 })

@@ -1,0 +1,256 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'link',
+1 verbose cli   '--local' ]
+2 info using npm@4.1.2
+3 info using node@v7.6.0
+4 verbose linkPkg C:\Users\benjam55\Documents\adobe-api-runner
+5 silly gentlyRm C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner is being purged
+6 verbose gentlyRm don't care about contents; nuking C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner
+7 silly vacuum-fs purging C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner
+8 silly vacuum-fs quitting because other entries in C:\Users\benjam55\AppData\Roaming\npm\node_modules
+9 verbose link build target C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner
+10 silly loadCurrentTree Starting
+11 silly install loadCurrentTree
+12 silly install readLocalPackageData
+13 silly install normalizeTree
+14 silly loadCurrentTree Finishing
+15 silly loadIdealTree Starting
+16 silly install loadIdealTree
+17 silly cloneCurrentTree Starting
+18 silly install cloneCurrentTreeToIdealTree
+19 silly cloneCurrentTree Finishing
+20 silly loadShrinkwrap Starting
+21 silly install loadShrinkwrap
+22 silly loadShrinkwrap Finishing
+23 silly loadAllDepsIntoIdealTree Starting
+24 silly install loadAllDepsIntoIdealTree
+25 silly loadAllDepsIntoIdealTree Finishing
+26 silly loadIdealTree Finishing
+27 silly currentTree adobe-api-runner@1.0.0
+27 silly currentTree +-- ansi-regex@2.1.1
+27 silly currentTree +-- async@2.1.4
+27 silly currentTree +-- builtin-modules@1.1.1
+27 silly currentTree +-- camelcase@3.0.0
+27 silly currentTree +-- cliui@3.2.0
+27 silly currentTree +-- code-point-at@1.1.0
+27 silly currentTree +-- commander@2.9.0
+27 silly currentTree +-- cross-spawn@5.1.0
+27 silly currentTree +-- d3-dsv@1.0.3
+27 silly currentTree +-- decamelize@1.2.0
+27 silly currentTree +-- error-ex@1.3.0
+27 silly currentTree +-- find-up@1.1.2
+27 silly currentTree +-- get-caller-file@1.0.2
+27 silly currentTree +-- graceful-fs@4.1.11
+27 silly currentTree +-- graceful-readlink@1.0.1
+27 silly currentTree +-- hosted-git-info@2.1.5
+27 silly currentTree +-- iconv-lite@0.4.15
+27 silly currentTree +-- invert-kv@1.0.0
+27 silly currentTree +-- is-arrayish@0.2.1
+27 silly currentTree +-- is-builtin-module@1.0.0
+27 silly currentTree +-- is-fullwidth-code-point@1.0.0
+27 silly currentTree +-- is-utf8@0.2.1
+27 silly currentTree +-- isexe@1.1.2
+27 silly currentTree +-- lcid@1.0.0
+27 silly currentTree +-- load-json-file@1.1.0
+27 silly currentTree +-- lodash@4.17.4
+27 silly currentTree +-- lru-cache@4.0.2
+27 silly currentTree +-- minimist@1.2.0
+27 silly currentTree +-- mute-stream@0.0.7
+27 silly currentTree +-- normalize-package-data@2.3.5
+27 silly currentTree +-- npm-path@2.0.3
+27 silly currentTree +-- npm-run@4.1.1
+27 silly currentTree +-- npm-which@3.0.1
+27 silly currentTree +-- number-is-nan@1.0.1
+27 silly currentTree +-- os-locale@1.4.0
+27 silly currentTree +-- parse-json@2.2.0
+27 silly currentTree +-- path-exists@2.1.0
+27 silly currentTree +-- path-type@1.1.0
+27 silly currentTree +-- pify@2.3.0
+27 silly currentTree +-- pinkie-promise@2.0.1
+27 silly currentTree +-- pinkie@2.0.4
+27 silly currentTree +-- progress@1.1.8
+27 silly currentTree +-- protochain@1.0.5
+27 silly currentTree +-- pseudomap@1.0.2
+27 silly currentTree +-- read-pkg-up@1.0.1
+27 silly currentTree +-- read-pkg@1.1.0
+27 silly currentTree +-- read@1.0.7
+27 silly currentTree +-- require-directory@2.1.1
+27 silly currentTree +-- require-main-filename@1.0.1
+27 silly currentTree +-- rw@1.3.3
+27 silly currentTree +-- sax@1.2.1
+27 silly currentTree +-- semver@5.3.0
+27 silly currentTree +-- serializerr@1.0.3
+27 silly currentTree +-- set-blocking@2.0.0
+27 silly currentTree +-- shebang-command@1.2.0
+27 silly currentTree +-- shebang-regex@1.0.0
+27 silly currentTree +-- spdx-correct@1.0.2
+27 silly currentTree +-- spdx-expression-parse@1.0.4
+27 silly currentTree +-- spdx-license-ids@1.2.2
+27 silly currentTree +-- string-width@1.0.2
+27 silly currentTree +-- strip-ansi@3.0.1
+27 silly currentTree +-- strip-bom@2.0.0
+27 silly currentTree +-- sync-exec@0.6.2
+27 silly currentTree +-- validate-npm-package-license@3.0.1
+27 silly currentTree +-- which-module@1.0.0
+27 silly currentTree +-- which@1.2.12
+27 silly currentTree +-- wrap-ansi@2.1.0
+27 silly currentTree +-- xmldoc@1.0.0
+27 silly currentTree +-- y18n@3.2.1
+27 silly currentTree +-- yallist@2.1.2
+27 silly currentTree +-- yargs-parser@4.2.1
+27 silly currentTree `-- yargs@6.6.0
+28 silly idealTree adobe-api-runner@1.0.0
+28 silly idealTree +-- ansi-regex@2.1.1
+28 silly idealTree +-- async@2.1.4
+28 silly idealTree +-- builtin-modules@1.1.1
+28 silly idealTree +-- camelcase@3.0.0
+28 silly idealTree +-- cliui@3.2.0
+28 silly idealTree +-- code-point-at@1.1.0
+28 silly idealTree +-- commander@2.9.0
+28 silly idealTree +-- cross-spawn@5.1.0
+28 silly idealTree +-- d3-dsv@1.0.3
+28 silly idealTree +-- decamelize@1.2.0
+28 silly idealTree +-- error-ex@1.3.0
+28 silly idealTree +-- find-up@1.1.2
+28 silly idealTree +-- get-caller-file@1.0.2
+28 silly idealTree +-- graceful-fs@4.1.11
+28 silly idealTree +-- graceful-readlink@1.0.1
+28 silly idealTree +-- hosted-git-info@2.1.5
+28 silly idealTree +-- iconv-lite@0.4.15
+28 silly idealTree +-- invert-kv@1.0.0
+28 silly idealTree +-- is-arrayish@0.2.1
+28 silly idealTree +-- is-builtin-module@1.0.0
+28 silly idealTree +-- is-fullwidth-code-point@1.0.0
+28 silly idealTree +-- is-utf8@0.2.1
+28 silly idealTree +-- isexe@1.1.2
+28 silly idealTree +-- lcid@1.0.0
+28 silly idealTree +-- load-json-file@1.1.0
+28 silly idealTree +-- lodash@4.17.4
+28 silly idealTree +-- lru-cache@4.0.2
+28 silly idealTree +-- minimist@1.2.0
+28 silly idealTree +-- mute-stream@0.0.7
+28 silly idealTree +-- normalize-package-data@2.3.5
+28 silly idealTree +-- npm-path@2.0.3
+28 silly idealTree +-- npm-run@4.1.1
+28 silly idealTree +-- npm-which@3.0.1
+28 silly idealTree +-- number-is-nan@1.0.1
+28 silly idealTree +-- os-locale@1.4.0
+28 silly idealTree +-- parse-json@2.2.0
+28 silly idealTree +-- path-exists@2.1.0
+28 silly idealTree +-- path-type@1.1.0
+28 silly idealTree +-- pify@2.3.0
+28 silly idealTree +-- pinkie-promise@2.0.1
+28 silly idealTree +-- pinkie@2.0.4
+28 silly idealTree +-- progress@1.1.8
+28 silly idealTree +-- protochain@1.0.5
+28 silly idealTree +-- pseudomap@1.0.2
+28 silly idealTree +-- read-pkg-up@1.0.1
+28 silly idealTree +-- read-pkg@1.1.0
+28 silly idealTree +-- read@1.0.7
+28 silly idealTree +-- require-directory@2.1.1
+28 silly idealTree +-- require-main-filename@1.0.1
+28 silly idealTree +-- rw@1.3.3
+28 silly idealTree +-- sax@1.2.1
+28 silly idealTree +-- semver@5.3.0
+28 silly idealTree +-- serializerr@1.0.3
+28 silly idealTree +-- set-blocking@2.0.0
+28 silly idealTree +-- shebang-command@1.2.0
+28 silly idealTree +-- shebang-regex@1.0.0
+28 silly idealTree +-- spdx-correct@1.0.2
+28 silly idealTree +-- spdx-expression-parse@1.0.4
+28 silly idealTree +-- spdx-license-ids@1.2.2
+28 silly idealTree +-- string-width@1.0.2
+28 silly idealTree +-- strip-ansi@3.0.1
+28 silly idealTree +-- strip-bom@2.0.0
+28 silly idealTree +-- sync-exec@0.6.2
+28 silly idealTree +-- validate-npm-package-license@3.0.1
+28 silly idealTree +-- which-module@1.0.0
+28 silly idealTree +-- which@1.2.12
+28 silly idealTree +-- wrap-ansi@2.1.0
+28 silly idealTree +-- xmldoc@1.0.0
+28 silly idealTree +-- y18n@3.2.1
+28 silly idealTree +-- yallist@2.1.2
+28 silly idealTree +-- yargs-parser@4.2.1
+28 silly idealTree `-- yargs@6.6.0
+29 silly generateActionsToTake Starting
+30 silly install generateActionsToTake
+31 silly generateActionsToTake Finishing
+32 silly diffTrees action count 0
+33 silly decomposeActions action count 0
+34 silly runTopLevelLifecycles Starting
+35 silly install runPreinstallTopLevelLifecycles
+36 silly preinstall adobe-api-runner@1.0.0
+37 info lifecycle adobe-api-runner@1.0.0~preinstall: adobe-api-runner@1.0.0
+38 silly lifecycle adobe-api-runner@1.0.0~preinstall: no script for preinstall, continuing
+39 silly executeActions Starting
+40 silly install executeActions
+41 silly doSerial global-install 0
+42 silly doParallel fetch 0
+43 verbose correctMkdir C:\Users\benjam55\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
+44 verbose lock using C:\Users\benjam55\AppData\Roaming\npm-cache\_locks\staging-7ad203781666031e.lock for C:\Users\benjam55\Documents\adobe-api-runner\node_modules\.staging
+45 silly doParallel extract 0
+46 silly doParallel preinstall 0
+47 silly doReverseSerial remove 0
+48 silly doSerial move 0
+49 silly doSerial finalize 0
+50 silly doSerial build 0
+51 silly doSerial global-link 0
+52 silly doParallel update-linked 0
+53 silly doSerial install 0
+54 silly doSerial postinstall 0
+55 verbose unlock done using C:\Users\benjam55\AppData\Roaming\npm-cache\_locks\staging-7ad203781666031e.lock for C:\Users\benjam55\Documents\adobe-api-runner\node_modules\.staging
+56 silly executeActions Finishing
+57 silly rollbackFailedOptional Starting
+58 silly rollbackFailedOptional Finishing
+59 silly install runPostinstallTopLevelLifecycles
+60 silly build adobe-api-runner@1.0.0
+61 info linkStuff adobe-api-runner@1.0.0
+62 silly linkStuff adobe-api-runner@1.0.0 has C:\Users\benjam55\Documents as its parent node_modules
+63 verbose linkBins adobe-api-runner@1.0.0
+64 verbose linkMans adobe-api-runner@1.0.0
+65 silly install adobe-api-runner@1.0.0
+66 info lifecycle adobe-api-runner@1.0.0~install: adobe-api-runner@1.0.0
+67 verbose lifecycle adobe-api-runner@1.0.0~install: unsafe-perm in lifecycle true
+68 verbose lifecycle adobe-api-runner@1.0.0~install: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\benjam55\Documents\adobe-api-runner\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\ImageMagick-7.0.3-Q16;C:\Program Files (x86)\Brackets\command;C:\Program Files\nodejs\;C:\Users\benjam55\AppData\Roaming\npm;C:\Users\benjam55\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\benjam55\AppData\Local\Programs\Python\Python36-32\;C:\Users\benjam55\AppData\Local\Programs\Python\Launcher\;C:\Users\benjam55\AppData\Local\Microsoft\WindowsApps
+69 verbose lifecycle adobe-api-runner@1.0.0~install: CWD: C:\Users\benjam55\Documents\adobe-api-runner
+70 silly lifecycle adobe-api-runner@1.0.0~install: Args: [ '/d /s /c', 'adobe-api-setup' ]
+71 silly lifecycle adobe-api-runner@1.0.0~install: Returned: code: 0  signal: null
+72 silly postinstall adobe-api-runner@1.0.0
+73 info lifecycle adobe-api-runner@1.0.0~postinstall: adobe-api-runner@1.0.0
+74 silly lifecycle adobe-api-runner@1.0.0~postinstall: no script for postinstall, continuing
+75 silly prepublish adobe-api-runner@1.0.0
+76 info lifecycle adobe-api-runner@1.0.0~prepublish: adobe-api-runner@1.0.0
+77 silly lifecycle adobe-api-runner@1.0.0~prepublish: no script for prepublish, continuing
+78 info lifecycle adobe-api-runner@1.0.0~prepare: adobe-api-runner@1.0.0
+79 silly lifecycle adobe-api-runner@1.0.0~prepare: no script for prepare, continuing
+80 silly runTopLevelLifecycles Finishing
+81 silly install printInstalled
+82 info build C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner
+83 info linkStuff adobe-api-runner@1.0.0
+84 silly linkStuff adobe-api-runner@1.0.0 has C:\Users\benjam55\AppData\Roaming\npm\node_modules as its parent node_modules
+85 silly linkStuff adobe-api-runner@1.0.0 is part of a global install
+86 silly linkStuff adobe-api-runner@1.0.0 is installed into a global node_modules
+87 silly linkStuff adobe-api-runner@1.0.0 is installed into the top-level global node_modules
+88 verbose linkBins adobe-api-runner@1.0.0
+89 verbose linkBins [ { 'adobe-api-runner': 'adobe-api-runner.js',
+89 verbose linkBins     'adobe-api-setup': 'node adobe-api-setup.js' },
+89 verbose linkBins   'C:\\Users\\benjam55\\AppData\\Roaming\\npm',
+89 verbose linkBins   true ]
+90 verbose linkMans adobe-api-runner@1.0.0
+91 verbose stack Error: ENOENT: no such file or directory, chmod 'C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner\node adobe-api-setup.js'
+92 verbose cwd C:\Users\benjam55\Documents\adobe-api-runner
+93 error Windows_NT 10.0.14393
+94 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "link" "--local"
+95 error node v7.6.0
+96 error npm  v4.1.2
+97 error path C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner\node adobe-api-setup.js
+98 error code ENOENT
+99 error errno -4058
+100 error syscall chmod
+101 error enoent ENOENT: no such file or directory, chmod 'C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner\node adobe-api-setup.js'
+102 error enoent ENOENT: no such file or directory, chmod 'C:\Users\benjam55\AppData\Roaming\npm\node_modules\adobe-api-runner\node adobe-api-setup.js'
+102 error enoent This is most likely not a problem with npm itself
+102 error enoent and is related to npm not being able to find a file.
+103 verbose exit [ -4058, true ]
