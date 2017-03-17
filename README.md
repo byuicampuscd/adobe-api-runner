@@ -3,13 +3,14 @@ A command line program, which creates adobe connect meetings which it reads from
 
 ### How To Install
 - Install [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/downloads)
-- Open up Command Prompt
+- Open up Command Prompt (preferably in the folder which contains your csvs if you know how)
 - type or paste `npm install -g byuitechops/adobe-api-runner`
 - There should be a funny loading bar and a bunch of stuff pop onto the screen
-- next type in `adobe-api-runner`
+- next type in `adobe-api-setup`
 - On the first run it will ask for your adobe IDs, which can be found with the instructions below
 - next it will ask for your csv files
-- You might need to paste the full path to the files, such as `C:\Users\<me>\Documents\Adobe Connect Stuff\courseList.csv`
+- If your command prompt in in the same folder as your csvs you can just type the name of the file else you might need to paste the full path to the files, such as `C:\Users\<me>\Documents\Adobe Connect Stuff\courseList.csv`
+- to run the program, just type the command `adobe-api-runner`
 
 ### How to Find the Adobe Connect IDs
 ##### Courses Folder ID
