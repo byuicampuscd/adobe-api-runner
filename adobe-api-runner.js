@@ -197,7 +197,7 @@ check to see if they were listed in the courseList file\n\
 				// For each section in this course
 				asyn.map(this.courses[course.name].sections,(section,sectCallback) => {
 					// Create the section folder
-					new Folder(this.courses[course.name].ID,section.name, (err,sectionID) => {
+					new Folder(this.courses[course.name].ID,"SET_"+section.name.slice(1), (err,sectionID) => {
 						if(err) { sectCallback(err,0); return; }
 						// save the ID
 						this.courses[course.name].sections[section.name].ID = sectionID;
